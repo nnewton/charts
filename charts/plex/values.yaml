@@ -6,12 +6,12 @@
 
 image:
   repository: plexinc/pms-docker
-  tag: 1.20.2.3402-0fec14d92
+  tag: 1.21.0.3711-b509cc236
   pullPolicy: IfNotPresent
 
 #####   START  --> Official PLEX container environment variables
 # Override this with the plex claim token from plex.tv/claim
-claimToken: ""
+claimToken: "claim--VxjTfd3ZK5tgyGwynsH"
 
 # Set the timezone of the plex server
 timezone: "UTC"
@@ -36,11 +36,11 @@ timezone: "UTC"
 
 # Set The user id of the plex user created inside the container.
 # See https://hub.docker.com/r/plexinc/pms-docker/ for details
-# plexUid: 1000
+plexUid: 1000
 
 # Set The group id of the plex group created inside the container
 # See https://hub.docker.com/r/plexinc/pms-docker/ for details
-# plexGid: 1000
+plexGid: 1000
 
 #####   END  --> Official PLEX container environment variables
 
@@ -68,7 +68,7 @@ securityContext: {}
   # runAsUser: 1000
 
 serviceTCP:
-  type: ClusterIP
+  type: NodePort 
   port: 32400
   ## Specify the nodePort value for the LoadBalancer and NodePort service types.
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
@@ -84,7 +84,7 @@ serviceTCP:
   ## Use loadBalancerIP to request a specific static IP,
   ## otherwise leave blank
   ##
-  loadBalancerIP:
+  #loadBalancerIP:
   # loadBalancerSourceRanges: []
   ## Set the externalTrafficPolicy in the Service to either Cluster or Local
   # externalTrafficPolicy: Cluster
@@ -101,7 +101,7 @@ serviceUDP:
   ## Use loadBalancerIP to request a specific static IP,
   ## otherwise leave blank
   ##
-  loadBalancerIP:
+  #loadBalancerIP:
   # loadBalancerSourceRanges: []
   ## Set the externalTrafficPolicy in the Service to either Cluster or Local
   # externalTrafficPolicy: Cluster
@@ -182,8 +182,7 @@ persistence:
     # AND it will count toward any ram pod/namespace limits. Additionally all data will be lost if/when the
     # pod is moved to another node. --set persistence.transcode.emptyDir.medium="Memory" `
     emptyDir:
-      medium: ""
-  #   medium: "Memory"
+      medium: "Memory"
 
 
   data:
@@ -192,17 +191,17 @@ persistence:
     # Optionally specify claimName to manually override the PVC to be used for
     # the data directory. If claimName is specified, storageClass and size are
     # ignored.
-    ## claimName: "plex-data-pvc"
+    claimName: "plex-data-pvc"
     # Optionally specify a storage class to be used for the data directory.
     # If not specified and claimName is not specified, the default storage
     # class will be used.
-    storageClass: ""
+    storageClass: "rook-cephfs"
     # subPath: some-subpath
     # The requested size of the volume to be used when creating a
     # PersistentVolumeClaim.
-    size: 40Gi
+    size: 400Gi
     # Access mode for this volume
-    accessMode: ReadWriteOnce
+    accessMode: ReadWriteMany
 
   extraData: []
     # Optionally specifify additional Data mounts.  These will be mounted as
@@ -238,7 +237,7 @@ persistence:
     # Optionally specify claimName to manually override the PVC to be used for
     # the config directory. If claimName is specified, storageClass and size
     # are ignored.
-    ## claimName: "plex-config-pvc"
+    claimName: "plex-config-pvc"
     # Optionally specify a storage class to be used for the config directory.
     # If not specified and claimName is not specified, the default storage
     # class will be used.
