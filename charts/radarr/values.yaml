@@ -12,18 +12,18 @@ service:
   port:
     port: 7878
 
-env: {}
+env:
   # TZ: UTC
-  # PUID: 1001
-  # PGID: 1001
+  PUID: 0
+  PGID: 0
 
 persistence:
   config:
-    enabled: false
+    enabled: true
     emptyDir: false
 
   media:
-    enabled: false
+    enabled: true
     emptyDir: false
     mountPath: /media
     ## Persistent Volume Storage Class
@@ -32,9 +32,9 @@ persistence:
     ## If undefined (the default) or set to null, no storageClassName spec is
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
-    # storageClass: "-"
+    storageClass: "nfs-client"
     # accessMode: ReadWriteOnce
     # size: 1Gi
     ## Do not delete the pvc upon helm uninstall
     # skipuninstall: false
-    # existingClaim: ""
+    existingClaim: "plex-data-pvc"
