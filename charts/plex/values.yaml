@@ -237,7 +237,7 @@ persistence:
     # Optionally specify claimName to manually override the PVC to be used for
     # the config directory. If claimName is specified, storageClass and size
     # are ignored.
-    claimName: "plex-config-pvc"
+    claimName: "plex-config2-pvc"
     # Optionally specify a storage class to be used for the config directory.
     # If not specified and claimName is not specified, the default storage
     # class will be used.
