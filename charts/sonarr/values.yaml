@@ -21,8 +21,8 @@ persistence:
   config:
     enabled: true
     emptyDir: false
-    storageClass: "nfs-client"
-    size: 10Gi
+    storageClass: "longhorn"
+    size: 20Gi
 
   media:
     enabled: true
