@@ -1,0 +1,112 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"batch/v1beta1","kind":"CronJob","metadata":{"annotations":{},"creationTimestamp":"2021-03-18T02:11:57Z","managedFields":[{"apiVersion":"batch/v1beta1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:kubectl.kubernetes.io/last-applied-configuration":{}}},"f:spec":{"f:concurrencyPolicy":{},"f:failedJobsHistoryLimit":{},"f:jobTemplate":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"sonarr-lftp\"}":{".":{},"f:args":{},"f:command":{},"f:image":{},"f:imagePullPolicy":{},"f:name":{},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/media\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"plex\"}":{".":{},"f:name":{},"f:persistentVolumeClaim":{".":{},"f:claimName":{}}}}}}}},"f:schedule":{},"f:successfulJobsHistoryLimit":{}},"f:status":{"f:lastScheduleTime":{}}},"manager":"kubectl-client-side-apply","operation":"Update","time":"2021-03-18T02:11:57Z"},{"apiVersion":"batch/v1beta1","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:suspend":{}}},"manager":"kubectl-edit","operation":"Update","time":"2021-03-18T17:59:59Z"}],"name":"sonarr-lftp","namespace":"plex","resourceVersion":"11264222","selfLink":"/apis/batch/v1beta1/namespaces/plex/cronjobs/sonarr-lftp","uid":"9c888091-c960-4652-a992-eefe0a80a20a"},"spec":{"concurrencyPolicy":"Forbid","failedJobsHistoryLimit":1,"jobTemplate":{"metadata":{"creationTimestamp":null},"spec":{"template":{"metadata":{"creationTimestamp":null},"spec":{"containers":[{"args":["-c","lftp -u psb43079,34t1DReg4s -e \"set sftp:auto-confirm yes; mirror -v -c -P 12 /files/completed/tv-sonarr /media/sonarr/temp; exit\" sftp://psb43079.seedbox.io"],"command":["/bin/sh"],"image":"nnewton/lftp:latest","imagePullPolicy":"Always","name":"sonarr-lftp","resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/media","name":"plex"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Never","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30,"volumes":[{"name":"plex","persistentVolumeClaim":{"claimName":"plex-data-pvc"}}]}}}},"schedule":"*/5 * * * *","successfulJobsHistoryLimit":3,"suspend":false},"status":{}}
+  creationTimestamp: "2021-03-18T18:06:41Z"
+  managedFields:
+  - apiVersion: batch/v1beta1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+      f:spec:
+        f:concurrencyPolicy: {}
+        f:failedJobsHistoryLimit: {}
+        f:jobTemplate:
+          f:spec:
+            f:template:
+              f:spec:
+                f:containers:
+                  k:{"name":"sonarr-lftp"}:
+                    .: {}
+                    f:args: {}
+                    f:command: {}
+                    f:image: {}
+                    f:imagePullPolicy: {}
+                    f:name: {}
+                    f:resources: {}
+                    f:terminationMessagePath: {}
+                    f:terminationMessagePolicy: {}
+                    f:volumeMounts:
+                      .: {}
+                      k:{"mountPath":"/media"}:
+                        .: {}
+                        f:mountPath: {}
+                        f:name: {}
+                f:dnsPolicy: {}
+                f:restartPolicy: {}
+                f:schedulerName: {}
+                f:securityContext: {}
+                f:terminationGracePeriodSeconds: {}
+                f:volumes:
+                  .: {}
+                  k:{"name":"plex"}:
+                    .: {}
+                    f:name: {}
+                    f:persistentVolumeClaim:
+                      .: {}
+                      f:claimName: {}
+        f:schedule: {}
+        f:successfulJobsHistoryLimit: {}
+        f:suspend: {}
+    manager: kubectl-client-side-apply
+    operation: Update
+    time: "2021-03-18T18:06:41Z"
+  - apiVersion: batch/v1beta1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:lastScheduleTime: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-04-06T02:50:03Z"
+  name: sonarr-lftp
+  namespace: plex
+  resourceVersion: "24560895"
+  selfLink: /apis/batch/v1beta1/namespaces/plex/cronjobs/sonarr-lftp
+  uid: b0cf450e-ee01-4c1a-95d5-81be716547ac
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - args:
+            - -c
+            - lftp -u psb43079,34t1DReg4s -e "set sftp:auto-confirm yes; mirror -v
+              -c -P 12 /files/completed/tv-sonarr /media/sonarr/temp; exit" sftp://psb43079.seedbox.io
+            command:
+            - /bin/sh
+            image: nnewton/lftp:latest
+            imagePullPolicy: Always
+            name: sonarr-lftp
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /media
+              name: plex
+          dnsPolicy: ClusterFirst
+          restartPolicy: Never
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+          volumes:
+          - name: plex
+            persistentVolumeClaim:
+              claimName: plex-data-pvc
+  schedule: '*/5 * * * *'
+  successfulJobsHistoryLimit: 3
+  suspend: false
+status:
+  lastScheduleTime: "2021-04-06T02:50:00Z"

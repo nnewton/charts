@@ -1,0 +1,125 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  creationTimestamp: "2021-03-08T02:47:42Z"
+  managedFields:
+  - apiVersion: batch/v1beta1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:failedJobsHistoryLimit: {}
+        f:jobTemplate:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:workload.user.cattle.io/workloadselector: {}
+          f:spec:
+            f:template:
+              f:spec:
+                f:affinity: {}
+                f:containers:
+                  k:{"name":"radarr-lftp"}:
+                    .: {}
+                    f:image: {}
+                    f:imagePullPolicy: {}
+                    f:name: {}
+                    f:resources: {}
+                    f:terminationMessagePath: {}
+                    f:terminationMessagePolicy: {}
+                    f:volumeMounts:
+                      .: {}
+                      k:{"mountPath":"/media"}:
+                        .: {}
+                        f:mountPath: {}
+                        f:name: {}
+                f:dnsPolicy: {}
+                f:restartPolicy: {}
+                f:schedulerName: {}
+                f:securityContext: {}
+                f:terminationGracePeriodSeconds: {}
+                f:volumes:
+                  .: {}
+                  k:{"name":"plex"}:
+                    .: {}
+                    f:name: {}
+                    f:persistentVolumeClaim:
+                      .: {}
+                      f:claimName: {}
+        f:schedule: {}
+        f:successfulJobsHistoryLimit: {}
+    manager: rancher
+    operation: Update
+    time: "2021-03-08T02:47:42Z"
+  - apiVersion: batch/v1beta1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:lastScheduleTime: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-03-15T02:20:07Z"
+  - apiVersion: batch/v1beta1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:concurrencyPolicy: {}
+        f:jobTemplate:
+          f:spec:
+            f:template:
+              f:spec:
+                f:containers:
+                  k:{"name":"radarr-lftp"}:
+                    f:args: {}
+                    f:command: {}
+        f:suspend: {}
+    manager: kubectl-edit
+    operation: Update
+    time: "2021-03-15T02:21:13Z"
+  name: radarr-lftp
+  namespace: plex
+  resourceVersion: "8976990"
+  selfLink: /apis/batch/v1beta1/namespaces/plex/cronjobs/radarr-lftp
+  uid: eb44624e-0382-4a3c-9c2f-933a61c54d5f
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: batch.cronjob-plex-radarr-lftp
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          affinity: {}
+          containers:
+          - args:
+            - -c
+            - lftp -u psb43079,34t1DReg4s -e "set sftp:auto-confirm yes; mirror -v -c -P 12 /files/completed/radarr /media/radarr/temp; exit" sftp://psb43079.seedbox.io
+            command:
+            - /bin/sh
+            image: nnewton/lftp:latest
+            imagePullPolicy: Always
+            name: radarr-lftp
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /media
+              name: plex
+          dnsPolicy: ClusterFirst
+          restartPolicy: Never
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+          volumes:
+          - name: plex
+            persistentVolumeClaim:
+              claimName: plex-data-pvc
+  schedule: '*/5 * * * *'
+  successfulJobsHistoryLimit: 3
+  suspend: false
+status:
+  lastScheduleTime: "2021-03-15T02:20:00Z"
